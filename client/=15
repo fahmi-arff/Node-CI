@@ -1,0 +1,4 @@
++ react@16.8.6
+added 3 packages from 1 contributor, updated 1 package and audited 11234 packages in 11.763s
+found 1103 vulnerabilities (435 low, 50 moderate, 617 high, 1 critical)
+  run `npm audit fix` to fix them, or `npm audit` for details
