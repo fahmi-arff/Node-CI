@@ -7,7 +7,17 @@ const client = redis.createClient(redisUrl);
 client.get = util.promisify(client.get);
 const exec = mongoose.Query.prototype.exec;
 
+// if it is using cache from redis without exec query
+mongoose.Query.prototype.cache = function(){
+  this.useCache = true;
+  return this;
+}
+
 mongoose.Query.prototype.exec =  async function(){
+  if(!this.useCache){
+    return exec.apply(this, arguments);
+  }
+
   const key = JSON.stringify(Object.assign({}, this.getQuery(), {
     collection: this.mongooseCollection.name
   }))
