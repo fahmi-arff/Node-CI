@@ -23,6 +23,20 @@ describe('When logged in', () => {
     expect(label).toEqual('Blog Title');
   })
 
+  describe('And using valid inputs', () => {
+    beforeEach(async () => {
+      await page.type('.title input', 'My Title');
+      await page.type('.content input', 'My Content');
+      await page.click('form button')
+    })
+
+    it('Submitting takes user to review screen', async() => {
+      const text = await page.getContentsOf('h5');
+
+      expect(text).toEqual('Please confirm your entries');
+    })
+  })
+
   describe('And using invalid inputs', () => {
     beforeEach(async () => {
       await page.click('form button');
