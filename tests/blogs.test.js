@@ -63,3 +63,20 @@ describe('When logged in', () => {
   });
 });
 
+
+describe('User is not logged in', () => {
+  test('User cannot create blog posts', async () => {
+    const result = await page.evaluate(() => {
+      return fetch('/api/blogs', {
+        method: 'POST',
+        credentials: "same-origin",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ title: 'My Title', content: 'My Content'})
+        // must be json data
+      }).then(res => res.json())
+    })
+    expect(result).toEqual({ error: 'You must log in!' })
+  })
+})
