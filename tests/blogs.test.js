@@ -38,7 +38,7 @@ describe('When logged in', () => {
 
     test('Submitting then saving adds blog to index page', async () => {
       await page.click('button.green');
-      await page.waitFor(3000);
+      await page.waitFor('.card');
 
       const title = await page.getContentsOf('.card-title');
       const content = await page.getContentsOf('p');
@@ -66,22 +66,14 @@ describe('When logged in', () => {
 
 describe('User is not logged in', () => {
   test('User cannot create blog posts', async () => {
-    const result = await page.evaluate(() => {
-      return fetch('/api/blogs', {
-        method: 'POST',
-        credentials: "same-origin",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ title: 'My Title', content: 'My Content'})
-        // must be json data
-      }).then(res => res.json())
-    })
+    const result = await page.post('/api/blogs', { title: 'T', content: 'C' })
+
     expect(result).toEqual({ error: 'You must log in!' })
   })
 
   test('User cannot get al list of posts', async () => {
     const result = await page.get('/api/blogs')
+
     expect(result).toEqual({ error: 'You must log in!' })
   })
 })
