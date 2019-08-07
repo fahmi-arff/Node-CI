@@ -1,5 +1,7 @@
 const Page = require('./helpers/page')
 const mongoose = require('mongoose')
+const { User } = require('../models/User');
+const { BLog } = require('../models/Blog');
 
 let page;
 
@@ -13,6 +15,8 @@ afterEach(async () => {
 });
 
 afterAll(async () => {
+  await User.deleteMany({ displayName: 'test' })
+  await BLog.deleteMany({ title: 'My Title' })
   await mongoose.disconnect();
 })
 
