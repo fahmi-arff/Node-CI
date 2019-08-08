@@ -12,7 +12,7 @@ class BlogShow extends Component {
       return <img src={
         "https://chief-blog-bucket.s3-ap-southeast-1.amazonaws.com/" + 
         this.props.blog.imageUrl
-      }/>
+      } alt=""/>
     }
   }
 
